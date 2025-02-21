@@ -1,0 +1,17 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center">
+  <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Select a User</h2>
+    
+    <%= form_tag session_path, class: "space-y-6", method: :post do %>
+      <div class="relative">
+        <%= select_tag :user_id, 
+            options_from_collection_for_select(@users, :id, :name),
+            class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 py-3 px-4 text-base",
+            prompt: "Choose a user..." %>
+      </div>
+
+      <%= submit_tag "Sign In", 
+          class: "w-full flex justify-center py-3 px-6 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none" %>
+    <% end %>
+  </div>
+</div> 

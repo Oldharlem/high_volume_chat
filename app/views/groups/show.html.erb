@@ -1,0 +1,79 @@
+<%= render "shared/navbar" %>
+
+<div class="h-[calc(100vh-4rem)] flex">
+  <!-- Sidebar -->
+  <div class="w-64 bg-gray-50 border-r border-gray-200">
+    <div class="p-4">
+      <button type="button" 
+              class="w-full inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              onclick="document.getElementById('new-group-modal').classList.remove('hidden')">
+        <svg class="mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        New Group
+      </button>
+    </div>
+    
+    <nav class="mt-4">
+      <% @groups.each do |group| %>
+        <%= link_to group_path(group), 
+            class: "block px-4 py-2 text-sm #{@group == group ? 'bg-indigo-50 text-indigo-600' : 'text-gray-600 hover:bg-gray-100'}" do %>
+          <%= group.name %>
+          <span class="float-right text-xs text-gray-400">
+            <%= group.messages_count %>
+          </span>
+        <% end %>
+      <% end %>
+    </nav>
+  </div>
+
+  <!-- Chat Area -->
+  <div class="flex-1 flex flex-col bg-white" 
+       data-controller="group-subscription"
+       data-controller-debug="true"
+       data-group-subscription-group-id-value="<%= @group.id %>"
+       data-group-subscription-user-id-value="<%= current_user.id %>">
+    <div class="border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-semibold text-gray-900"><%= @group.name %></h1>
+      <button type="button"
+              class="text-gray-600 hover:text-gray-900"
+              onclick="document.getElementById('group-users-modal').classList.remove('hidden')"
+              title="Manage Users">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-6" data-group-subscription-target="messages">
+      <% @messages.each do |message| %>
+        <%= render "messages/message", message: message %>
+      <% end %>
+    </div>
+
+    <!-- Message Input -->
+    <div class="border-t border-gray-200 px-6 py-6">
+      <%= form_with model: [@group, Message.new], 
+          class: "flex space-x-3",
+          data: { 
+            group_subscription_target: "form",
+            action: "submit->group-subscription#submitMessage prevent",
+            turbo: false
+          } do |f| %>
+        <%= f.text_field :body,
+            class: "flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 py-3 px-4 text-base",
+            placeholder: "Type your message...",
+            data: { 
+              group_subscription_target: "input",
+              action: "keydown->group-subscription#handleKeydown" 
+            } %>
+        <%= f.submit "Send",
+            class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- New Group Modal -->
+<%= render "shared/new_group_modal" %>
+<%= render "groups/users_modal" %> 

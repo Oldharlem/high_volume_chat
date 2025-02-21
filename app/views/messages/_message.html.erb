@@ -1,0 +1,22 @@
+<div class="message mb-4">
+  <div class="flex items-start <%= message.user == current_user ? 'justify-end' : 'justify-start' %>">
+    <div class="flex-1 max-w-[80%]">
+      <div class="flex items-center <%= message.user == current_user ? 'justify-end' : 'justify-start' %>">
+        <% unless message.user == current_user %>
+          <span class="font-medium text-gray-900"><%= message.user.name %></span>
+        <% end %>
+        <span class="text-sm text-gray-500 <%= message.user == current_user ? 'mr-2' : 'ml-2' %>">
+          <%= message.created_at.strftime("%H:%M") %>
+        </span>
+      </div>
+      <div class="mt-1">
+        <div class="<%= message.user == current_user ? 
+          'bg-indigo-600 text-white rounded-l-lg rounded-tr-lg' : 
+          'bg-gray-100 text-gray-900 rounded-r-lg rounded-tl-lg' %> 
+          px-4 py-2 break-words">
+          <%= message.body %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,27 +1,59 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Installation
 
-Things you may want to cover:
+### Prerequisites
+- Ruby 3.4.0 or higher
+- Rails 8.0
+- PostgreSQL
+- Bun
 
-* Ruby version
+### Steps
 
-* System dependencies
+1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/hv-chat-ass.git
+   cd hv-chat-ass
+   ```
 
-* Configuration
 
-* Database creation
+2. Install dependencies:
+   ```bash
+   bundle install
+   bun install
+   ```
 
-* Database initialization
+3. Setup database:
+   ```bash
+   # Create and setup the database
+   rails db:create
+   rails db:migrate
+   
+   # Optional: Load sample data
+   rails db:seed
+   ```
 
-* How to run the test suite
+4. Configure environment:
+   - Copy `.env.example` to `.env`
+   - Update database credentials in `.env` if needed
 
-* Services (job queues, cache servers, search engines, etc.)
+5. Start the server:
+   ```bash
+   # Start the Rails server
+   rails s
+   
+   # In a separate terminal, start the Bun asset watcher
+   bun run watch
+   ```
 
-* Deployment instructions
+6. Visit http://localhost:3000 in your browser
 
-* ...
+7. Run tests:
+   ```bash
+   rails test
+   ```
+
+
 
 # High-Volume Group Messaging App
 
@@ -33,6 +65,7 @@ Things you may want to cover:
 - N+1 query prevention with includes
 - Real-time updates via ActionCable
 - Caching of group memberships
+- Counter cache for message counts to avoid expensive COUNT queries
 
 ### Future Scaling Solutions
 

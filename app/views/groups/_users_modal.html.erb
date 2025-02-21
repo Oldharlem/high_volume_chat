@@ -1,0 +1,45 @@
+<div id="group-users-modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+  <div class="bg-white rounded-lg p-8 max-w-lg w-full mx-4">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-lg font-medium text-gray-900">Group Members</h3>
+      <button onclick="document.getElementById('group-users-modal').classList.add('hidden')" 
+              class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Close</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mb-8">
+      <h4 class="text-sm font-medium text-gray-700 mb-4">Current Members</h4>
+      <div class="space-y-3">
+        <% @group.memberships.accepted.includes(:user).each do |membership| %>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <span class="text-gray-900"><%= membership.user.name %></span>
+              <% if membership.invited_by %>
+                <span class="ml-2 text-sm text-gray-500">
+                  (Invited by <%= membership.invited_by.name %>)
+                </span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-medium text-gray-700 mb-4">Invite New Member</h4>
+      <%= form_with url: group_invitations_path(@group), class: "flex space-x-3" do |f| %>
+        <%= f.select :user_id,
+            User.where.not(id: @group.user_ids).pluck(:name, :id),
+            { prompt: "Select user..." },
+            class: "flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 py-3 px-4 text-base" %>
+        
+        <%= f.submit "Invite",
+            class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none" %>
+      <% end %>
+    </div>
+  </div>
+</div> 

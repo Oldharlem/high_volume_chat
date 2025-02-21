@@ -1,0 +1,33 @@
+<div id="new-group-modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+  <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-lg font-medium text-gray-900">Create New Group</h3>
+      <button onclick="document.getElementById('new-group-modal').classList.add('hidden')" 
+              class="text-gray-400 hover:text-gray-500">
+        <span class="sr-only">Close</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <%= form_with model: Group.new, class: "space-y-6" do |f| %>
+      <div>
+        <%= f.label :name, class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <%= f.text_field :name,
+            class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 py-3 px-4 text-base",
+            placeholder: "Enter group name" %>
+      </div>
+
+      <div class="flex justify-end space-x-3">
+        <button type="button"
+                onclick="document.getElementById('new-group-modal').classList.add('hidden')"
+                class="px-6 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none">
+          Cancel
+        </button>
+        <%= f.submit "Create Group",
+            class: "px-6 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none" %>
+      </div>
+    <% end %>
+  </div>
+</div> 
