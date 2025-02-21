@@ -13,6 +13,8 @@ class Membership < ApplicationRecord
   end
 
   def accept_invitation!
+    return if invitation_accepted?
+
     update!(invitation_accepted: true)
   end
 end

@@ -26,32 +26,15 @@
 3. Setup database:
    ```bash
    # Create and setup the database
-   rails db:create
-   rails db:migrate
-   
-   # Optional: Load sample data
-   rails db:seed
+   rails db:setup
    ```
 
-4. Configure environment:
-   - Copy `.env.example` to `.env`
-   - Update database credentials in `.env` if needed
-
-5. Start the server:
+4. Start the server:
    ```bash
-   # Start the Rails server
-   rails s
-   
-   # In a separate terminal, start the Bun asset watcher
-   bun run watch
+   bin/dev
    ```
 
-6. Visit http://localhost:3000 in your browser
-
-7. Run tests:
-   ```bash
-   rails test
-   ```
+5. Visit http://localhost:3000 in your browser
 
 
 
@@ -93,7 +76,5 @@
    - Add NewRelic/Scout for performance monitoring
    - Track message metrics with StatsD/Datadog
    - Set up error tracking with Sentry
-
-## Setup Instructions
-...
+   
 # high_volume_chat

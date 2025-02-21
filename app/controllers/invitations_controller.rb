@@ -2,7 +2,7 @@ class InvitationsController < ApplicationController
   def create
     @group = Group.find(params[:group_id])
     user = User.find(params[:user_id])
-    
+
     if Membership.exists?(user: user, group: @group)
       redirect_to group_path(@group), alert: "User is already a member or has a pending invitation"
     else
@@ -10,4 +10,5 @@ class InvitationsController < ApplicationController
       redirect_to group_path(@group), notice: "Invitation sent to #{user.name}"
     end
   end
-end 
+end
+
