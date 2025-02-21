@@ -12,8 +12,8 @@
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/hv-chat-ass.git
-   cd hv-chat-ass
+   git clone https://github.com/Oldharlem/high_volume_chat.git
+   cd high_volume_chat
    ```
 
 
